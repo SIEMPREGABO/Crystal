@@ -32,8 +32,8 @@ export const header = () => {
                         </ul>
                         <div class="d-flex">
                             <ul class="navbar-nav mb-2 mb-lg-0">
-                                <li class="nav-item"><Link class="nav-link" to="/login">Login</Link></li>
-                                <li class="nav-item"><Link class="nav-link" to="/register">Register</Link></li>
+                                <li class="nav-item"><Link class="nav-link" to="/login">Ingresar</Link></li>
+                                <li class="nav-item"><Link class="nav-link" to="/register">Registro</Link></li>
                             </ul>
                         </div>
                     </div>

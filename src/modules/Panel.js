@@ -28,7 +28,7 @@ export const register = () => {
                         <div class="card-header">
                             Tus proyectos activos
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush text-start">
                             <li class="list-group-item">An item</li>
                             <li class="list-group-item">A second item</li>
                             <li class="list-group-item">A third item</li>

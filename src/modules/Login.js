@@ -41,10 +41,10 @@ export const Login = () => {
             <div class="container-fluid position-relative p-4 text-center">
                 <div class="col-md-4 px-2 p-lg-3 mx-auto my-5">
                 <form class="shadow" onSubmit={handleSubmit}>
-                    <label class="px-2 pt-3 pb-1 h5">Login</label>
+                    <label class="px-2 pt-3 pb-1 h5">Ingresar</label>
                     <div class= "p-4 row align-items-center">
                         <label class="col">Correo: </label>
-                        <input 
+                        <input      
                         type="text" 
                         name="email"
                         placeholder='alguien@example.com'
