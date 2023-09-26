@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from './axios.js';
 
-const back = "http://localhost:4000/api"
 
-export const requestLogin = async user => axios.post(`${back}/login`,user);
-export const requestRegister = async user => axios.post(`${back}/register`,user);
+export const requestLogin = async user => axios.post(`/login`,user);
+export const requestRegister = async user => axios.post(`/register`,user);
+export const requestVerify = () => axios.get(`/verify`);
 

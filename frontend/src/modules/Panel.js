@@ -1,9 +1,15 @@
 import Footer from "./Footer";
 import image from "../images/profile.png";
 import { Link } from "react-router-dom";
+import { useAuth } from '../context/authContext';
+import moment from "moment";
 
 
-export const register = () => {
+export const Panel = () => {
+    const { user } = useAuth();
+    const fecha = moment.utc(user.created).format('DD-MM-YYYY');
+    console.log(user);
+
     return (
         <div>
             <div className="container-fluid position-relative p-4">
@@ -11,18 +17,20 @@ export const register = () => {
                     <div className="row justify-content-evenly d-md-flex flex-md-equal w-100 my-md-3 p-md-3 mx-auto">
                         <div className="text-bg-dark overflow-hidden col">
                             <div className="mt-3 pt-3 ms-5 ps-5">
-                                <h2 className="display-5">Bienvenido Gabriel</h2>
-                                <p className="lead">#124246546</p>
-                                <p className="lead">Unido desde 14/06/23</p>
+                                
+                                <h2 className="display-5">Bienvenido {user.nombre}</h2>
+                                <p className="lead">#{user.id}</p>
+                                <p className="lead">Unido desde {fecha}</p>
+
 
                             </div>
                         </div>
                         <div className="text-bg-dark text-center overflow-hidden col">
                             <div className="text-bg-dark pe-5 me-5 pt-3 mt-3">
-                                <img src={image} className="img-sm" alt="..." />
-
+                               <img src={image} className="img-sm" alt="..." />
                             </div>
                         </div>
+                        
                     </div>
                     <div className="card ">
                         <div className="card-header">
@@ -49,4 +57,4 @@ export const register = () => {
     )
 }
 
-export default register;
+export default Panel;

@@ -1,6 +1,8 @@
 import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import { createAccessToken } from '../libs/jwt.js';
+import jwt from 'jsonwebtoken';
+import { SECRET_TOKEN } from '../config.js';
 
 export const register = async (req, res) => {
     const { name, paternlastname, maternlastname, number, email, password } = req.body;
@@ -22,7 +24,7 @@ export const register = async (req, res) => {
         const findUser = await newUser.save();
 
         const token = await createAccessToken({ id: findUser._id });
-        res.cookie("token", token);
+        //res.cookie("token", token);
         res.json({
             id: findUser._id,
             name: findUser.name,
@@ -77,4 +79,24 @@ export const profile = async (req, res) => {
         updated: Userfind.updatedAt
     });
 
+}
+
+export const verifyToken = async (req, res) => {
+    const {token} = req.cookies;
+    if(!token) return res.status(401).json({message: ["No autorizado"]});
+
+    jwt.verify(token, SECRET_TOKEN, async (error, user) =>{
+        if(error) return res.status(401).json({message: ["No autorizado"]});
+
+        const userFound = await User.findById(user.id);
+        if(!userFound) return res.status(401).json({message: ["No autorizado"]});
+
+        return res.json({
+            id: userFound.id,
+            nombre: userFound.name,
+            paternlastname: userFound.paternlastname,
+            maternlastname: userFound.maternlastname,
+            createdAt: userFound.createdAt
+        })
+    })
 }

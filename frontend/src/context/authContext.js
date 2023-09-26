@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import { requestLogin, requestRegister } from "../requests/auth.js";
+import { requestLogin, requestRegister, requestVerify } from "../requests/auth.js";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -14,19 +14,30 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [IsAuthenticated, setIsAuthenticated] = useState(false);
-  const [errors, setErrors] = useState ([]);
+  const [registererrors, setRegistererrors] = useState ([]);
+  const [loginerrors, setLoginerrors] = useState([]);
   const [message, setMessage] = useState([]);
-  const [IsRegistered, setIsRegistered] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   
   useEffect(() => {
     if (message.length > 0) {
       const timer = setTimeout(() => {
         setMessage([]);
-        setIsRegistered(false);
-      }, 10000);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  useEffect(() => {
+    if (loginerrors.length > 0 || registererrors.length > 0) {
+      const timer = setTimeout(() => {
+        setLoginerrors([]);
+        setRegistererrors([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [loginerrors,registererrors]);
+  
 
   const signin = async (user) => {
     try {
@@ -37,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       
     } catch (error) {
       console.log(error.response.data.message);
-      setErrors(error.response.data.message);
+      setLoginerrors(error.response.data.message);
     }
   };
 
@@ -46,22 +57,46 @@ export const AuthProvider = ({ children }) => {
       const res = await requestRegister(user);
       setUser(res.data);
       console.log(res.data);
-      setIsRegistered(true);
       setMessage(["Usuario registrado correctamente"]);
     } catch (error) {
       console.log(error.response.data.message);
-      setErrors(error.response.data.message);
+      setRegistererrors(error.response.data.message);
     }
   }
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const cookies = Cookies.get();
+      if (!cookies.token) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await requestVerify(cookies.token);
+        console.log(res);
+        if (!res.data) return setIsAuthenticated(false);
+        setIsAuthenticated(true);
+        setUser(res.data);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setLoading(false);
+      }
+    };
+    checkLogin();
+  }, []);
   
   return (
     <AuthContext.Provider
       value={{
         user,
         IsAuthenticated,
-        errors,
+        loginerrors,
+        registererrors,
         message,
-        IsRegistered,
+        isLoading,
         signin,
         signup
       }}

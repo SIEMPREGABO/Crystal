@@ -16,8 +16,10 @@ export const Login = () => {
         resolver: zodResolver(loginSchema)
     });
     const navigate = useNavigate();
-    const { message,  signin, IsAuthenticated, errors: loginErrors} = useAuth();
+    const {  signin, IsAuthenticated, loginerrors} = useAuth();
     
+    
+
     const onSubmit = handleSubmit(async (values) => {
         signin(values);
     })
@@ -32,8 +34,7 @@ export const Login = () => {
     return (
         <div>
             <div className="container-fluid position-relative p-4 text-center">
-                {message && <div className=" bg-success mt-2 me-2 text-white shadow">{message}</div>}
-                {loginErrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{loginErrors}</div>}
+                {loginerrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{loginerrors}</div>}
                 <div className="col-md-4 px-2 p-lg-3 mx-auto my-5">
                     <form className="shadow" onSubmit={handleSubmit(onSubmit)}>
                         <label className="px-2 pt-3 pb-1 h5">Ingresar</label>
@@ -67,7 +68,7 @@ export const Login = () => {
                             <div className="px-1  col">
                                 <input className=" btn btn-dark btn-custom btn-xs " type="submit" value="Ingresar" />
                             </div>
-                            <Link className="col h5" to="/register">Registrate</Link>
+                            <Link className="col h5" to="/register" >Registrate</Link>
                         </div>
                     </form>
                 </div>

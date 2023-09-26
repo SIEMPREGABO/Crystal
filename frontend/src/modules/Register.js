@@ -17,7 +17,7 @@ export const Register = () => {
         resolver: zodResolver(registerSchema)
     });
 
-    const { signup, IsAuthenticated ,IsRegistered, errors: registerErrors } = useAuth();
+    const { message, signup, IsAuthenticated , registererrors} = useAuth();
     const navigate = useNavigate();
     
     const onSubmit = handleSubmit(async (values) => {
@@ -25,19 +25,15 @@ export const Register = () => {
     })
 
     useEffect(() => {
-
-        if(IsAuthenticated){
-            navigate("/panel");
-        }else{
-            if(IsRegistered) navigate("/login"); 
-        }
-    },[IsRegistered,IsAuthenticated]);
+        if(IsAuthenticated) navigate("/panel");
+    },[IsAuthenticated]);
 
 
     return (
         <div>
             <div className="container-fluid position-relative p-4 text-center">
-                {registerErrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{registerErrors}</div>}
+            {message && <div className=" bg-success mt-2 me-2 text-white shadow">{message}</div>}
+                {registererrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{registererrors}</div>}
                 <div className="col-md-6 px-2 mx-auto mt-5">
                     <form className="shadow" onSubmit={handleSubmit(onSubmit)} >
                         <label className="px-2 pt-3 pb-1 h4">Registro</label>
@@ -190,7 +186,7 @@ export const Register = () => {
                             <div className="col ps-4">
                                 <input className=" btn btn-dark btn-custom btn-xs " type="submit" value="Registrarse" />
                             </div>
-                            <Link className="col h5 pe-4" to="/register">Ingresar</Link>
+                            <Link className="col h5 pe-4" to="/login">Ingresar</Link>
                         </div>
 
                     </form>
