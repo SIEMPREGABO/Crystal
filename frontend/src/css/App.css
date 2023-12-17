@@ -32,49 +32,131 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-.AppSty{
-  width: 80%; 
-  height: 300px; 
+.AppSty {
+  width: 80%;
+  height: 300px;
   border-radius: 21px 21px 0 0;
 }
 
-.footer{
+.footer {
   position: fixed;
   width: 100%;
   bottom: 0;
 }
 
-.btn-custom{
-  border:1px solid #100;
+.btn-custom {
+  border: 1px solid #100;
+  width: 100px;
 }
 
-.login{
+.btn-custom-register {
+  border: 1px solid #100;
+  width: 200px;
+}
+
+.btn-custom-config{
+  height: 35px;
+}
+
+.login {
   border: 10px solid #000;
-  
+
 }
 
-.img-sm{
+.img-sm {
   width: 150px;
 }
 
-.img-md{
+.img-md {
   width: 300px;
 }
 
-.img-lg{
+.img-lg {
   width: 512px;
 }
 
-.border-container{
+.border-container {
   border-radius: 20px;
 }
 
-.size-input{
+.size-input {
   size: 100%;
 }
 
+.sidebar {
+  padding-top: 1rem;
+  width: 14rem;
+  height: calc(100vh - 52px);
+  border-right: 1px solid #e6e6e6;
+  a {
+    text-decoration: none;
+    color: #333;
+    /* Añadido: Color de texto para los enlaces */
+    font-weight: bold;
+    /* Añadido: Negrita para los enlaces */
+    display: block;
+    /* Añadido: Mostrar los enlaces como bloques */
+    padding: 0.5rem 0;
+    /* Añadido: Espaciado interno para los enlaces */
+  }
+
+
+}
+
+#list-format{
+  list-style: none;
+  padding: 1rem 2rem;
+  #row {
+    margin-bottom: 2rem;
+  }
+}
+
+.chat-dimension{
+  
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+ 
+}
+
+.message-dimension{
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid #ccc;
+  
+}
+
+.send-text{
+  border: 2px solid #e6e6e6;
+}
+
+.flex {
+  display: flex;
+}
+
+.size-calendar{
+  width: 600px;
+  max-width: 100%;
+  margin: 20px auto;
+}
+
+.centered-calendar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ /* Esto centra verticalmente el calendario en la pantalla completa */
+}
+
+.Without-border{
+  border-style: none;
+}
+
+.border-light{
+  border: 4px solid #000;
+}

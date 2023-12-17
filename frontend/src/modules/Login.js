@@ -6,7 +6,6 @@ import { useAuth } from '../context/authContext';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react';
 
-
 export const Login = () => {
     const {
         register,
@@ -60,7 +59,7 @@ export const Login = () => {
                                 placeholder='Contraseña'
                                 className="col"
 
-                                {...register("password", { required: true })}
+                                {...register("password", { required: true, message: "campo requerido" })}
                             />
                             {errors.password && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.password.message}</div>}
                         </div>
@@ -68,12 +67,15 @@ export const Login = () => {
                             <div className="px-1  col">
                                 <input className=" btn btn-dark btn-custom btn-xs " type="submit" value="Ingresar" />
                             </div>
-                            <Link className="col h5" to="/register" >Registrate</Link>
+                            <Link className="col h5 text-info" to="/register" >Registrate</Link>
+                        </div>
+                        <div className='pb-4 pt-2'>
+                        <Link className="h6 text-info" to="/reset" >¿Olvidaste tu contraseña?</Link>
+
                         </div>
                     </form>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 };

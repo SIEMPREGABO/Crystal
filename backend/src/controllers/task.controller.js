@@ -30,7 +30,7 @@ export const getTask = async (req, res) => {
 }
 
 export const updateTask = async (req,res) => {
-    const taskFound = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    const taskFound = await Task.updateOne(req.params.id, req.body, {new: true})
     
     if (!taskFound) return res.status(404).json({message:"Tarea no encontrada"})
 

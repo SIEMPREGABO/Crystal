@@ -24,8 +24,21 @@ const userSchema = new mongoose.Schema({
         trim:true},
     password:{
         type:String,
-        required: true}
-
+        required: true},
+    image:{
+        name:{
+            type: String
+        },
+        type: {
+            type: String
+        },
+        data: {
+            type: String
+        },
+        size: {
+            type:String
+        }
+    }
 },{
     timestamps: true
 });

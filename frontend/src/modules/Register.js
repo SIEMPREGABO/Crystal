@@ -17,23 +17,25 @@ export const Register = () => {
         resolver: zodResolver(registerSchema)
     });
 
-    const { message, signup, IsAuthenticated , registererrors} = useAuth();
+    const { message, signup, IsAuthenticated, registererrors } = useAuth();
     const navigate = useNavigate();
-    
+
     const onSubmit = handleSubmit(async (values) => {
         signup(values);
     })
 
     useEffect(() => {
-        if(IsAuthenticated) navigate("/panel");
-    },[IsAuthenticated]);
+        if (IsAuthenticated) navigate("/panel");
+    }, [IsAuthenticated]);
 
 
     return (
         <div>
             <div className="container-fluid position-relative p-4 text-center">
-            {message && <div className=" bg-success mt-2 me-2 text-white shadow">{message}</div>}
+                {message && <div className=" bg-success mt-2 me-2 text-white shadow">{message}</div>}
                 {registererrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{registererrors}</div>}
+                {errors.refine && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.refine.message}</div>}
+
                 <div className="col-md-6 px-2 mx-auto mt-5">
                     <form className="shadow" onSubmit={handleSubmit(onSubmit)} >
                         <label className="px-2 pt-3 pb-1 h4">Registro</label>
@@ -135,14 +137,14 @@ export const Register = () => {
 
                         <div className=" row justify-content-evenly">
                             {errors.email &&
-                            <div className=" col-5 ps-3">
+                                <div className=" col-5 ps-3">
                                     <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.email.message}</div>
-                            </div>}
+                                </div>}
 
                             {errors.repeatemail &&
-                            <div className=" col-5 pe-3">
+                                <div className=" col-5 pe-3">
                                     <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatemail.message}</div>
-                            </div>}
+                                </div>}
                         </div>
 
 
@@ -172,16 +174,18 @@ export const Register = () => {
 
                         <div className=" row justify-content-evenly">
                             {errors.password &&
-                            <div className=" col-5 ps-3">
-                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.password.message}</div>
-                            </div>}
+                                <div className=" col-5 ps-3">
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.password?.message}</div>
+                                </div>}
 
                             {errors.repeatpassword &&
-                            <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatpassword.message}</div>
-                            </div>}
+                                <div className=" col-5 pe-3">
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatpassword?.message}</div>
+                                </div>}
                         </div>
 
+
+                        
                         <div className="px-5 pb-4 pt-3 row align-items-center">
                             <div className="col ps-4">
                                 <input className=" btn btn-dark btn-custom btn-xs " type="submit" value="Registrarse" />
@@ -192,7 +196,6 @@ export const Register = () => {
                     </form>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }
