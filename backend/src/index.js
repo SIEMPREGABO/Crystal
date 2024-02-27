@@ -1,11 +1,12 @@
-import dotenv from 'dotenv';
+
 import app from './app.js';
-import { connectDB } from './database.js';
+import { getConnection } from './database.js';
 
 
 async function main(){
     try{
-        await connectDB();
+        const connection  = await getConnection();
+        console.log("MySQL connected from index");
         app.listen(app.get('port'));
         console.log('Server on port',app.get('port'));
     } catch (error) {

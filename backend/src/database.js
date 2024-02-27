@@ -1,19 +1,20 @@
-import mongoose from 'mongoose';
-const URITAG = "mongodb://127.0.0.1:27017/Crystal";
-const URI = URITAG ? URITAG: 'mongodb://127.0.0.1:27017/dbtest';
+//import mongoose from 'mongoose';
+import mysql from 'promise-mysql';
+import dotenv from 'dotenv';
 
-export const connectDB = async () => {
-    try {
-        await mongoose.connect(URI,{useNewUrlParser: true});
-        console.log("BD connected");
-    } catch (error) {
-        console.log(error);
-    }
+dotenv.config();
+
+const connection = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+});
+
+export const getConnection = () => {
+    return connection;
 };
- 
-/*
-const connection = mongoose.connection;
 
-connection.once('open', () => {
-    console.log('DB is connected');
-});*/
+/*module.exports = {
+    getConnection
+}*/

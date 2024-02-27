@@ -20,7 +20,9 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.5",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "nodemailer": "^6.9.7",
+    "promise-mysql": "^5.2.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {

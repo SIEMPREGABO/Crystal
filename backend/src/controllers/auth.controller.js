@@ -1,65 +1,57 @@
-import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import { createAccessToken, createPasswordToken } from '../libs/jwt.js';
 import jwt from 'jsonwebtoken';
 import { SECRET_TOKEN, SECRETPASS_TOKEN } from '../config.js';
 import { sendemail } from '../middlewares/send.mail.js';
+import {agregarUsuario, autenticarUsuario, extraerUsuario, verificarUsuario} from '../querys/querys.js';
+
 
 
 export const register = async (req, res) => {
-    const { name, paternlastname, maternlastname, number, email, password } = req.body;
-    try {
-
-        const registeredUser = await User.findOne({ email });
-        if (registeredUser) return res.status(400).json({ message: ["Usuario registrado"] });
-
-        const passwordHash = await bcrypt.hash(password, 10);
-        const newUser = new User({
-            name,
-            paternlastname,
-            maternlastname,
-            number,
-            email,
-            password: passwordHash
-        })
-        console.log(newUser);
-        const findUser = await newUser.save();
-
-        //const token = await createAccessToken({ id: findUser._id });
-        //res.cookie("token", token); La quite para no iniciar sesion al registrarse
-        
+    const {CORREO,  NOMBRE_USUARIO, CONTRASENIA, NOMBRE_PILA  , APELLIDO_PATERNO , APELLIDO_MATERNO , TELEFONO, NUMERO_BOLETA} = req.body;
+    try{
+        //Verifica si existen el usuario
+        const verificar = await verificarUsuario(CORREO);
+        if(verificar.success) return res.status(400).json({ message: ["Usuario registrado"] });
+        //Encripta la contraseña
+        const passwordHash = await bcrypt.hash(CONTRASENIA, 10);
+        //Agrega el usuario a la base
+        const agregar = await agregarUsuario(CORREO,  NOMBRE_USUARIO, passwordHash, NOMBRE_PILA  , APELLIDO_PATERNO , APELLIDO_MATERNO , TELEFONO, NUMERO_BOLETA)
+        if(!agregar) res.status(500).json({ message: ["Error del servidor, intentelo nuevamente"]});
+        //Extrae el usuario desde la base
+        const User = await extraerUsuario(CORREO);
         res.json({
-            id: findUser._id,
-            name: findUser.name,
-            email: findUser.email,
-            created: findUser.createdAt
+            id: User[0].ID,
+            NOMBRE_USUARIO: User[0].NOMBRE_USUARIO,
+            CORREO: User[0].CORREO,
+            FECHA_CREACION: User[0].FECHA_CREACION
         });
     }catch (error) {
         res.status(500).json({ message: [error.message] })
     }
-
 }
 
 export const login = async (req, res) => {
+    const { CORREO, CONTRASENIA } = req.body;
+    console.log(CORREO,CONTRASENIA);
     try {
-        const { email, password } = req.body;
-        const findUser = await User.findOne({ email });
-        if (!findUser) return res.status(400).json({ message: ["Usuario no registrado"] });
-
-        const isMatch = await bcrypt.compare(password, findUser.password);
+        //Verifica la existencia del usuario
+        const verificar = await verificarUsuario(CORREO);
+        if(!verificar.success) return res.status(400).json({ message: ["Usuario no registrado"] });
+        //Compara las contraseñas        
+        const isMatch = await bcrypt.compare(CONTRASENIA, verificar.userData[0].CONTRASENIA);
         if (!isMatch) return res.status(400).json({ message: ["Contraseña incorrecta"] });
-        const token = await createAccessToken({ id: findUser._id });
+        //Crea el token de acceso
+        const token = await createAccessToken({id:verificar.userData[0].ID});
         if(!token) return res.status(500).json({message:["Error inesperado, intente nuevamente"]});
-
+        //Responde con el token y la info del usuario
         res.cookie("token", token);
         res.json({
-            id: findUser._id,
-            name: findUser.name,
-            email: findUser.email,
-            created: findUser.createdAt,
-            image: findUser.image
+            ID: verificar.userData[0].ID,
+            CORREO: verificar.userData[0].CORREO,
+            NOMBRE_USUARIO: verificar.userData[0].NOMBRE_USUARIO,
+            FECHA_CREACION: verificar.userData[0].FECHA_CREACION
         });
-
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -68,15 +60,17 @@ export const login = async (req, res) => {
 
 export const reset = async (req, res) => {
     try {
-        const { email } = req.body;
-        const findUser = await User.findOne({ email });
-        if (!findUser) return res.status(400).json({ message: ["Usuario no registrado"] });
-        
-        const token = await createPasswordToken({ id: findUser.email });
+        const { CORREO } = req.body;
+        //Verifica la existencia del usuario
+        const verificar = await verificarUsuario(CORREO);
+        if (!verificar.success) return res.status(400).json({ message: ["Usuario no registrado"] });
+        //Crea el token para resetear la contraseña
+        const token = await createPasswordToken({ id: verificar.userData[0].ID });
         if(!token) return res.status(500).json({message:["Error inesperado, intente nuevamente"]});
-
-        const emailsendend = await sendemail(findUser.email, token);
+        //Envia el correo con el token
+        const emailsendend = await sendemail(verificar.userData[0].CORREO, token);
         if (!emailsendend) return res.status(400).json({ message: ["Error inesperado, intente nuevamente"] })
+        //Manda una respuesta al cliente
         res.status(200).json({
             message: "Correo enviado a su bandeja de entrada"
         });
@@ -87,59 +81,34 @@ export const reset = async (req, res) => {
 
 export const logout = (req, res) => {
     res.cookie('token', "", { expires: new Date(0) })
-    return res.sendStatus(200)
+    return res.sendStatus(200);
 };
 
 export const profile = async (req, res) => {
-    const Userfind = await User.findById(req.user.id);
-    if (!Userfind) return res.status(403).json({ message: "Usuario no encontrado" });
+    const userData = await autenticarUsuario(req.user.id);
+    if (!userData.success) return res.status(403).json({ message: "Usuario no encontrado" });
 
     return res.json({
-        id: Userfind._id,
-        name: Userfind.name,
-        email: Userfind.email,
-        created: Userfind.createdAt,
-        updated: Userfind.updatedAt,
-        image: Userfind.image
+        ID: userData.userData[0].ID,
+        NOMBRE_USUARIO: userData.userData[0].NOMBRE_USUARIO,
+        CORREO: userData.userData[0].CORREO,
+        FECHA_CREACION: userData.userData[0].FECHA_CREACION
     });
-
-}
-
-export const image = async (req, res) => {
-    const { email, image } = req.body;
-    try {
-        const userUpdated = await User.findOneAndUpdate({ email }, { $set: { image } }, { new: true });
-        if (!userUpdated) return res.status(404).json({ message: "Error al cargar la imagen" });
-
-        return res.json({
-            id: userUpdated.id,
-            email: userUpdated.email,
-            name: userUpdated.name,
-            image: userUpdated.image
-        });
-    } catch (error) {
-        res.status(400).json({ message: [error.message] })
-    }
 }
 
 export const verifyToken = async (req, res) => {
     const { token } = req.cookies;
     if (!token) return res.status(401).json({ message: ["No autorizado"] });
-
     jwt.verify(token, SECRET_TOKEN, async (error, user) => {
         if (error) return res.status(401).json({ message: ["No autorizado"] });
-
-        const userFound = await User.findById(user.id);
-        if (!userFound) return res.status(401).json({ message: ["No autorizado"] });
-
+        const verificar = await autenticarUsuario(user.id);
+        if(!verificar.success) return res.status(400).json({ message: ["No autorizado"] });
         return res.json({
-            id: userFound.id,
-            name: userFound.name,
-            email: userFound.email,
-            paternlastname: userFound.paternlastname,
-            maternlastname: userFound.maternlastname,
-            createdAt: userFound.createdAt,
-            image: userFound.image
+            ID: verificar.userData[0].ID,
+            NOMBRE_USUARIO: verificar.userData[0].NOMBRE_USUARIO,
+            CORREO: verificar.userData[0].CORREO,
+            FECHA_CREACION: verificar.userData[0].FECHA_CREACION
         })
     })
 }
+
