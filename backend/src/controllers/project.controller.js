@@ -3,6 +3,19 @@ import Task from '../models/task.model.js';
 //get tasks solo poe id
 //const tasks = await Task.find({user: req.user.id}).populate('user');
 
+export const createProject = async (req, res) => {
+    const {NOMBRE_PROYECTO,  OBJETIVO , DESCRIPCION, FECHA_INICIO  , FECHA_TERMINO , ENTREGAS , ITERACIONES} = req.body;
+    //La constitucion son los dias que tienen antes de comenzar el proyecto #Quitar
+
+    try{
+        
+    }catch(error){
+        res.status(500).json({ message: [error.message] })
+    }
+
+
+}
+
 export const getTasks = async (req,res) =>{
     const tasks = await Task.find();
     res.json(tasks);

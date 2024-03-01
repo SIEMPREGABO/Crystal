@@ -3,7 +3,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import authRoutes from './routes/auth.routes.js'
 import cookie_parser from 'cookie-parser'
-import taskRoutes from './routes/task.routes.js'
+import projectRoutes from './routes/project.routes.js'
 
 const app = express();
 
@@ -26,6 +26,6 @@ app.use(cors({
 //routes
 
 app.use("/api",authRoutes);
-app.use("/api",taskRoutes);
+app.use("/api",projectRoutes);
 
 export default app;

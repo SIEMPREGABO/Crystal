@@ -16,7 +16,7 @@ export const Proyecto = () => {
             <Sidebar />
             <div className="container">
                 <Routes>
-                    <Route path="" element={<Dashboard></Dashboard>}/>
+                    <Route path="" element={<Dashboard/>}/>
                     <Route path="roles" element={<Asignacion />} />
                     <Route path="tareas" element={<Tareas/>} />
                     <Route path="calendario" element={<Calendario/>} />

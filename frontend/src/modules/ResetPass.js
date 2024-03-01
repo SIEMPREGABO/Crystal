@@ -21,11 +21,7 @@ export const ResetPass = () => {
     const onSubmit = handleSubmit(async (values) => {
         resetToken(values);
     });
-    
-    /*useEffect(() => {
-        if(IsSended) console.log(IsSended);
-    },[IsSended]);*/
-    
+
     return (
         <div>
             <div className="container-fluid position-relative p-4 text-center">
