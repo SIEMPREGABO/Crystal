@@ -48,6 +48,12 @@ export const resetSchema = z.object({
     })
 });
 
+export const resetpasswordSchema = z.object({
+    CONTRASENIA: z.string({
+        required_error: 'La contraseña es requerida'
+    }).min(8, {message: "Mínimo 8 caracteres"})
+});
+
 export const taskSchema = z.object({
     title: z.string({
       required_error: "Titulo es requerido",

@@ -1,3 +1,4 @@
+import { promise } from "zod";
 import { getConnection } from "../database.js";
 
 export function verificarUsuario(CORREO) {
@@ -21,11 +22,11 @@ export function verificarUsuario(CORREO) {
 export function agregarUsuario(CORREO, NOMBRE_USUARIO, CONTRASENIA, NOMBRE_PILA, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, NUMERO_BOLETA) {
     return new Promise(async (resolve, reject) => {
         const connection = await getConnection();
-        const insertarQuery = 'INSERT INTO USUARIO (CORREO, NOMBRE_USUARIO, CONTRASENIA, NOMBRE_PILA, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, NUMERO_BOLETA) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        const insertarQuery = `INSERT INTO USUARIO (CORREO, NOMBRE_USUARIO, CONTRASENIA, NOMBRE_PILA, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, NUMERO_BOLETA,FECHA_CREACION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CONVERT_TZ(NOW(), '+00:00', '-06:00'))`;
         connection.query(insertarQuery,[CORREO, NOMBRE_USUARIO, CONTRASENIA, NOMBRE_PILA, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, NUMERO_BOLETA],
             (insertarErr, insertarResults) => {
                 if (insertarErr) {
-                    reject(false);
+                    reject(insertarErr);
                 } else {
                     resolve(true);
                 }
@@ -65,3 +66,82 @@ export function autenticarUsuario(ID) {
         });
     });
 };
+
+export function actualizarPass(CORREO,CONTRASENIA){
+    return new Promise(async (resolve, reject)=>{
+        const connection = await getConnection();
+        const query = 'UPDATE USUARIO SET CONTRASENIA = ? WHERE CORREO = ?';
+        connection.query(query, [CONTRASENIA, CORREO], (err, results) =>{
+            if (err) {
+                err({success:false, error:err});
+            } else {
+                resolve({success:true, userData:results});
+            }
+        })
+    });
+}
+
+export function getMensajes(){
+    return new promise(async (resolve, reject) =>{
+        const connection = await getConnection();
+        const query = 'SELECT * FROM MENSAJES';
+        connection.query(query, (err,results) => {
+            if(err){
+                err({success:false, error: err});
+            }else{
+                if(results.length == 0){
+                    results({
+                        success: true,
+                        vacio: true
+                    })
+                }else{
+                    results({
+                        success: true,
+                        vacio: false,
+                        mensajes: results
+                    })
+                }
+            }
+        })
+    })
+}
+
+
+export function getTasks(){
+    return new promise(async (resolve, reject) =>{
+        const connection = await getConnection();
+        const query = 'SELECT * FROM TASKS';
+        connection.query(query, (err,results) => {
+            if(err){
+                err({success:false, error: err});
+            }else{
+                if(results.length == 0){
+                    results({
+                        success: true,
+                        vacio: true
+                    })
+                }else{
+                    results({
+                        success: true,
+                        vacio: false,
+                        mensajes: results
+                    })
+                }
+            }
+        })
+    })
+}
+
+export function getTask(ID){
+    return new promise(async (resolve,reject) =>{
+        const connection = await getConnection();
+        const query = 'SELECT * FROM TASK WHERE ID = ?';
+        connection.query(query, [ID], (err,results)=> {
+            if(reject){
+                reject({success: false, error: err});
+            }else{
+                results({success:true, tasks:results});
+            }
+        })
+    })
+}

@@ -1,4 +1,4 @@
-import { SECRET_TOKEN } from '../config.js';
+import { SECRET_TOKEN,SECRETPASS_TOKEN } from '../config.js';
 import jwt from 'jsonwebtoken';
 
 export const validarToken = (req,res,next) => {
@@ -11,5 +11,17 @@ export const validarToken = (req,res,next) => {
         //console.log(user);
         req.user = user;
         next();  
+    })
+}
+
+export const validarTokenPass = (req,res,next) => {
+    const token = req.params.id;
+    //console.log(req.params.id);
+    if(!token) return res.status(401).json({message: "No autorizado"});
+    
+    jwt.verify(token, SECRETPASS_TOKEN, async (error, user) => {
+        if (error) return res.status(401).json({message : ["Token no autorizado"]});
+        req.user=user;
+        next();
     })
 }
