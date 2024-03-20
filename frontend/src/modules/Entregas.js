@@ -3,25 +3,25 @@ import React from "react";
 export const Entregas = () => {
 
     return (
-        <div class="container">
-            <div class="row">
-                <div class="col-12 ">
+        <div className="container">
+            <div className="row">
+                <div className="col-12 ">
                     <div className="position-relative p-4 text-center ">
                         <div className=" px-2 p-lg-3 mx-auto border-light">
                             <p>
-                                <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExampleEntrega1" aria-expanded="false" aria-controls="collapseExample">
+                                <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExampleEntrega1" aria-expanded="false" aria-controls="collapseExample">
                                     <h4>Entrega #1</h4>
                                 </button>
                             </p>
-                            <div class="collapse border-light" id="collapseExampleEntrega1">
-                                <div class="card card-body Without-border">
+                            <div className="collapse border-light" id="collapseExampleEntrega1">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #1
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample2">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample2">
+                                        <div className="card card-body">
                                             <div className="card mb-3 text-center">
                                                 <div className="card-body row  align-items-center">
                                                     <div className='col text-end'>
@@ -48,7 +48,7 @@ export const Entregas = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card card-body">
+                                        <div className="card card-body">
                                             <div className="card mb-3 text-center">
                                                 <div className="card-body row  align-items-center">
                                                     <div className='col text-end'>
@@ -77,14 +77,14 @@ export const Entregas = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card card-body Without-border">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #2
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample3">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample3">
+                                        <div className="card card-body">
                                         </div>
                                     </div>
                                 </div>
@@ -94,35 +94,35 @@ export const Entregas = () => {
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 ">
+            <div className="row">
+                <div className="col-12 ">
                     <div className="position-relative p-4 text-center ">
                         <div className=" px-2 p-lg-3 mx-auto border-light">
                             <p>
-                                <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExampleEntrega2" aria-expanded="false" aria-controls="collapseExample">
+                                <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExampleEntrega2" aria-expanded="false" aria-controls="collapseExample">
                                     <h4>Entrega #2</h4>
                                 </button>
                             </p>
-                            <div class="collapse border-light" id="collapseExampleEntrega2">
-                                <div class="card card-body Without-border">
+                            <div className="collapse border-light" id="collapseExampleEntrega2">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #1
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample2">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample2">
+                                        <div className="card card-body">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card card-body Without-border">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #2
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample3">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample3">
+                                        <div className="card card-body">
                                         </div>
                                     </div>
                                 </div>
@@ -132,35 +132,35 @@ export const Entregas = () => {
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 ">
+            <div className="row">
+                <div className="col-12 ">
                     <div className="position-relative p-4 text-center ">
                         <div className=" px-2 p-lg-3 mx-auto border-light">
                             <p>
-                                <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExampleEntrega3" aria-expanded="false" aria-controls="collapseExample">
+                                <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExampleEntrega3" aria-expanded="false" aria-controls="collapseExample">
                                     <h4>Entrega #3</h4>
                                 </button>
                             </p>
-                            <div class="collapse border-light" id="collapseExampleEntrega3">
-                                <div class="card card-body Without-border">
+                            <div className="collapse border-light" id="collapseExampleEntrega3">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #1
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample2">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample2">
+                                        <div className="card card-body">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card card-body Without-border">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #2
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample3">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample3">
+                                        <div className="card card-body">
                                         </div>
                                     </div>
                                 </div>

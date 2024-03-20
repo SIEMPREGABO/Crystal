@@ -40,7 +40,7 @@ export const Config = () => {
                         <label>Días para  la constitución del proyecto:</label>
                     </div>
                     <div className="col text-start ps-5">
-                        <select class="btn btn-info dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                        <select className="btn btn-info dropdown-toggle px-3 mb-1" aria-label="Large select example">
                             <option selected>Días</option>
                             <option value="1">3</option>
                             <option value="2">4</option>
@@ -55,7 +55,7 @@ export const Config = () => {
                         <label>Entregas del proyecto:</label>
                     </div>
                     <div className="col text-start ps-5">
-                        <select class="btn btn-info dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                        <select className="btn btn-info dropdown-toggle px-3 mb-1" aria-label="Large select example">
                             <option selected>Entregas</option>
                             <option value="1">3</option>
                             <option value="2">4</option>
@@ -70,7 +70,7 @@ export const Config = () => {
                         <label>Iteraciones por entrega:</label>
                     </div>
                     <div className="col text-start ps-5">
-                        <select class="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                        <select className="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
                             <option selected>Iteraciones</option>
                             <option value="1">3</option>
                             <option value="2">4</option>
@@ -84,7 +84,7 @@ export const Config = () => {
                         <label>Delegar puesto a participante:</label>
                     </div>
                     <div className="col text-start ps-5">
-                        <select class="btn btn-info dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                        <select className="btn btn-info dropdown-toggle px-3 mb-1" aria-label="Large select example">
                             <option selected>Usuario</option>
                             <option value="1">3</option>
                             <option value="2">4</option>

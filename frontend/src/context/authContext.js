@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import { requestLogin, requestRegister, requestVerify, requestReset} from "../requests/auth.js";
+import { requestLogin, requestRegister,requestLogout, requestVerify, requestReset, requestPass} from "../requests/auth.js";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -15,20 +15,40 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [IsSended, setIsSended] = useState(false);
   const [IsAuthenticated, setIsAuthenticated] = useState(false);
+  const [IsChanged, setIsChanged] = useState(false);
   const [registererrors, setRegistererrors] = useState ([]);
   const [reseterrors, setReseterrors] = useState([]);
+  const [resetpasserrors, setResetpasserrors] = useState([]);
   const [loginerrors, setLoginerrors] = useState([]);
   const [message, setMessage] = useState([]);
+  const [messagepass, setMessagepass] = useState([]);
   const [isLoading, setLoading] = useState(true);
   
   useEffect(() => {
     if (message.length > 0) {
       const timer = setTimeout(() => {
         setMessage([]);
+        //setIsChanged(true);
       }, 5000);
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  useEffect(() => {
+    if (messagepass.length > 0) {
+      const timer = setTimeout(() => {
+        setMessagepass([]);
+        setIsChanged(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+    if (IsChanged) {
+      const timer = setTimeout(() => {
+        setIsChanged(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [messagepass, IsChanged]);
 
   useEffect(() => {
     if (loginerrors.length > 0 || registererrors.length > 0 || reseterrors.length > 0) {
@@ -48,10 +68,10 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data);
       setIsAuthenticated(true);
       console.log(res.data);
-      
+      //console.log(error.response.data.message);
     } catch (error) {
-      console.log(error.response.data.message);
-      setLoginerrors("Error inesperado, intente nuevamente");
+      console.log(error.response);
+      setLoginerrors(error.response.data.message);
     }
   };
 
@@ -63,7 +83,7 @@ export const AuthProvider = ({ children }) => {
       setMessage(["Usuario registrado correctamente"]);
     } catch (error) {
       //console.log(error.response.data.message);
-      setRegistererrors("Error inesperado, intente nuevamente");
+      setRegistererrors(error.response.data.message);
     }
   }
 
@@ -75,9 +95,27 @@ export const AuthProvider = ({ children }) => {
       setMessage([res.data.message]);    
     }catch(error){
       //console.log(error.response.data.message);
-      setReseterrors("Error inesperado, intente nuevamente");
+      setReseterrors(error.response.data.message);
     }
-  } 
+  }
+  
+  const resetPass = async (user) => {
+    try {
+      //console.log(user);
+      const res = await requestPass(user);
+      //console.log(res.data);
+      setMessagepass("Contraseña cambiada con exito");
+    } catch (error) {
+      setResetpasserrors(error.response.data.message);
+    }
+  }
+
+  const logout = async () =>{
+    const res = await requestLogout();
+    console.log(res);
+    setIsAuthenticated(false);
+    setUser(null);
+  }
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -111,11 +149,16 @@ export const AuthProvider = ({ children }) => {
         loginerrors,
         registererrors,
         reseterrors,
+        resetpasserrors,
         message,
         isLoading,
+        IsChanged,
+        messagepass,
         signin,
         signup,
-        resetToken
+        resetToken,
+        resetPass,
+        logout
       }}
     >
       {children}

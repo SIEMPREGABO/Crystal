@@ -34,6 +34,23 @@ export const createProject = async (req, res) => {
     }
 }
 
+export const getProjects = async (res, req) => {
+    try {
+        const {token} = req.cookies;
+        //if(!token) return res.status(401).json({message: ["No autorizado"]});
+        jwt.verify(token, SECRET_TOKEN, async (error, user) => {
+            if (error) return res.status(401).json({ message: ["No autorizado"] });
+            const proyectos = await projectsUsuario(user.id);
+            if (!proyectos.success) return res.status(401).json({ message: ["No autorizado"] });
+            return res.json({
+                PROYECTOS: proyectos.projects 
+            })
+        })
+    } catch (error) {
+        res.status(500).json({message: [error.message]})
+    }
+}
+
 export const getTasks = async (req, res) => {
     try {
         const tasks = await getTasks();

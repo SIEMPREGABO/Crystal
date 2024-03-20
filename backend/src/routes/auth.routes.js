@@ -11,7 +11,7 @@ router.post('/logout',logout);
 //router.get('/profile',validarToken,profile);
 router.get('/verify', verifyToken);
 router.post('/reset',validateSchema(resetSchema),reset)
-router.get('/resetpass/:id',validarTokenPass, resetpass)
+router.post('/resetpass', resetpass)
 router.post('/changepass',validateSchema(resetpasswordSchema),changePassword)
 
 export default router;

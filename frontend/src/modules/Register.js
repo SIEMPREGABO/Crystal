@@ -39,7 +39,43 @@ export const Register = () => {
                 <div className="col-md-6 px-2 mx-auto mt-5">
                     <form className="shadow" onSubmit={handleSubmit(onSubmit)} >
                         <label className="px-2 pt-3 pb-1 h4">Registro</label>
+
                         <div className="pt-3 px-5 row align-items-center text-start">
+                            <label className="col">Nombre de Usuario </label>
+                            <label className="col ps-5">Boleta</label>
+                        </div>
+
+                        <div className="pt-1 pb-2 px-3 row justify-content-evenly">
+                            <input
+                                className="col-5"
+                                type="text"
+                                name="NOMBRE_USUARIO"
+                                placeholder='Nombre Usuario'
+                                {...register("NOMBRE_USUARIO", { required: true })}
+                            />
+                            <input
+                                className="col-5"
+                                type="text"
+                                name="NUMERO_BOLETA"
+                                placeholder='Boleta'
+                                {...register("NUMERO_BOLETA", { required: true })}
+                            />
+                        </div>
+
+                        <div className=" row justify-content-evenly">
+                            {errors.NOMBRE_USUARIO &&
+                                <div className=" col-5 ps-3">
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.NOMBRE_USUARIO.message}</div>
+                                </div>}
+
+                            {errors.NUMERO_BOLETA &&
+                                <div className=" col-5 pe-3">
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.NUMERO_BOLETA.message}</div>
+                                </div>}
+                        </div>
+
+
+                        <div className="pt-2 px-5 row align-items-center text-start">
                             <label className="col">Nombre (s) </label>
                             <label className="col ps-5">Apellido Paterno </label>
                         </div>
@@ -48,28 +84,28 @@ export const Register = () => {
                             <input
                                 className="col-5"
                                 type="text"
-                                name="name"
+                                name="NOMBRE_PILA"
                                 placeholder='Nombre'
-                                {...register("name", { required: true })}
+                                {...register("NOMBRE_PILA", { required: true })}
                             />
                             <input
                                 className="col-5"
                                 type="text"
-                                name="paternlastname"
+                                name="APELLIDO_PATERNO"
                                 placeholder='Apellido Paterno'
-                                {...register("paternlastname", { required: true })}
+                                {...register("APELLIDO_PATERNO", { required: true })}
                             />
                         </div>
 
                         <div className=" row justify-content-evenly">
-                            {errors.name &&
+                            {errors.NOMBRE_PILA &&
                                 <div className=" col-5 ps-3">
-                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.name.message}</div>
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.NOMBRE_PILA.message}</div>
                                 </div>}
 
-                            {errors.paternlastname &&
+                            {errors.APELLIDO_PATERNO &&
                                 <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.paternlastname.message}</div>
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.APELLIDO_PATERNO.message}</div>
                                 </div>}
                         </div>
 
@@ -84,30 +120,30 @@ export const Register = () => {
                                 className="col-5"
                                 type="text"
                                 placeholder='Apellido Materno'
-                                name="maternlastname"
-                                {...register("maternlastname", { required: true })}
+                                name="APELLIDO_MATERNO"
+                                {...register("APELLIDO_MATERNO", { required: true })}
                             />
                             <input
                                 className="col-5"
-                                name="number"
+                                name="TELEFONO"
                                 type="text"
                                 maxLength="12"
 
                                 placeholder='xx-xxxx-xxxx'
-                                {...register("number", { required: true })}
+                                {...register("TELEFONO", { required: true })}
                             />
                         </div>
 
 
                         <div className=" row justify-content-evenly">
-                            {errors.maternlastname &&
+                            {errors.APELLIDO_MATERNO &&
                                 <div className=" col-5 ps-3">
-                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.maternlastname.message}</div>
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.APELLIDO_MATERNO.message}</div>
                                 </div>}
 
-                            {errors.number &&
+                            {errors.TELEFONO &&
                                 <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.number.message}</div>
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.TELEFONO.message}</div>
                                 </div>}
                         </div>
 
@@ -119,31 +155,31 @@ export const Register = () => {
                             <input
                                 className="col-5"
                                 type="email"
-                                name="email"
+                                name="CORREO"
                                 placeholder='alguien@example.com'
-                                {...register("email", { required: true })}
+                                {...register("CORREO", { required: true })}
                             />
 
                             <input
                                 className="col-5"
                                 type="email"
-                                name="repeatemail"
+                                name="repeatCORREO"
 
                                 placeholder='alguien@example.com'
-                                {...register("repeatemail", { required: true })}
+                                {...register("repeatCORREO", { required: true })}
                             />
                         </div>
 
 
                         <div className=" row justify-content-evenly">
-                            {errors.email &&
+                            {errors.CORREO &&
                                 <div className=" col-5 ps-3">
-                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.email.message}</div>
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.CORREO.message}</div>
                                 </div>}
 
-                            {errors.repeatemail &&
+                            {errors.repeatCORREO &&
                                 <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatemail.message}</div>
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatCORREO.message}</div>
                                 </div>}
                         </div>
 
@@ -157,35 +193,35 @@ export const Register = () => {
                                 className="col-5"
                                 type="password"
                                 placeholder='Contraseña'
-                                name="password"
-                                {...register("password", { required: true })}
+                                name="CONTRASENIA"
+                                {...register("CONTRASENIA", { required: true })}
                             />
                             <input
                                 className="col-5"
                                 type="password"
-                                name="repeatpassword"
+                                name="repeatCONTRASENIA"
 
                                 placeholder='Contraseña'
-                                {...register("repeatpassword", { required: true })}
+                                {...register("repeatCONTRASENIA", { required: true })}
                             />
                         </div>
 
 
 
                         <div className=" row justify-content-evenly">
-                            {errors.password &&
+                            {errors.CONTRASENIA &&
                                 <div className=" col-5 ps-3">
-                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.password?.message}</div>
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.CONTRASENIA?.message}</div>
                                 </div>}
 
-                            {errors.repeatpassword &&
+                            {errors.repeatCONTRASENIA &&
                                 <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatpassword?.message}</div>
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatCONTRASENIA?.message}</div>
                                 </div>}
                         </div>
 
 
-                        
+
                         <div className="px-5 pb-4 pt-3 row align-items-center">
                             <div className="col ps-4">
                                 <input className=" btn btn-dark btn-custom btn-xs " type="submit" value="Registrarse" />

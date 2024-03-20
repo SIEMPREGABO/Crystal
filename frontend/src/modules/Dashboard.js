@@ -13,37 +13,37 @@ export const Dashboard = () => {
     };
 
     return (
-        <div class="container">
-            <div class="row">
-                <div class="col-12 ">
+        <div className="container">
+            <div className="row">
+                <div className="col-12 ">
                     <div className="position-relative p-4 text-center ">
                         <div className=" px-2 p-lg-3 mx-auto border-light">
                             <p>
-                                <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     Entrega #1
                                 </button>
                             </p>
-                            <div class="collapse border-light" id="collapseExample">
-                                <div class="card card-body Without-border">
+                            <div className="collapse border-light" id="collapseExample">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #1
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample2">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample2">
+                                        <div className="card card-body">
                                             Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card card-body Without-border">
+                                <div className="card card-body Without-border">
                                     <p>
-                                        <button class="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                                        <button className="form-select Without-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
                                             Iteracion #2
                                         </button>
                                     </p>
-                                    <div class="collapse" id="collapseExample3">
-                                        <div class="card card-body">
+                                    <div className="collapse" id="collapseExample3">
+                                        <div className="card card-body">
                                             Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div className="col-6">
                     <div className="position-relative p-4 text-center">
                         <div className=" px-2  mx-auto ">
                             <h5 className='pb-1'> Proxima entrega: 30 de diciembre</h5>
@@ -63,7 +63,7 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div className="col-6">
                     <div className="position-relative p-4 text-center">
                         <div className=" px-2 p-lg-3 mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-right-text px-2" viewBox="0 0 16 16">

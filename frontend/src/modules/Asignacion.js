@@ -26,7 +26,7 @@ export const Asignacion = () => {
                     <div className="dropdown col">
                         <div className="row">
                             <div className="col text-end">
-                                <select class="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                                <select className="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
                                     <option selected>Asignar</option>
                                     <option value="1">Diseñador</option>
                                     <option value="2">Experto en Negocios</option>
@@ -47,7 +47,7 @@ export const Asignacion = () => {
                     <div className="dropdown col">
                         <div className="row">
                             <div className="col text-end">
-                                <select class="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                                <select className="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
                                     <option selected>Asignar</option>
                                     <option value="1">Diseñador</option>
                                     <option value="2">Experto en Negocios</option>
@@ -68,7 +68,7 @@ export const Asignacion = () => {
                     <div className="dropdown col">
                         <div className="row">
                             <div className="col text-end">
-                                <select class="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                                <select className="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
                                     <option selected>Asignar</option>
                                     <option value="1">Diseñador</option>
                                     <option value="2">Experto en Negocios</option>
@@ -88,7 +88,7 @@ export const Asignacion = () => {
                     <div className="dropdown col">
                         <div className="row">
                             <div className="col text-end">
-                                <select class="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
+                                <select className="btn btn-info btn-xs dropdown-toggle px-3 mb-1" aria-label="Large select example">
                                     <option selected>Asignar</option>
                                     <option value="1">Diseñador</option>
                                     <option value="2">Experto en Negocios</option>

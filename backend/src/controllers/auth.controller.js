@@ -2,17 +2,22 @@ import bcrypt from 'bcryptjs'
 import { createAccessToken, createPasswordToken } from '../libs/jwt.js';
 import jwt from 'jsonwebtoken';
 import { SECRET_TOKEN, SECRETPASS_TOKEN } from '../config.js';
-import { sendemail, sendemailReset } from '../middlewares/send.mail.js';
-import { actualizarPass, agregarUsuario, autenticarUsuario, extraerUsuario, verificarUsuario } from '../querys/querys.js';
+import { sendemailInvite, sendemailReset } from '../middlewares/send.mail.js';
+import { actualizarPass, agregarUsuario, autenticarUsuario, extraerUsuario, verificarNombre, verificarUsuario, cambiarContrasenia } from '../querys/querys.js';
+import moment from 'moment-timezone';
 
 
 
 export const register = async (req, res) => {
     const { CORREO, NOMBRE_USUARIO, CONTRASENIA, NOMBRE_PILA, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, NUMERO_BOLETA } = req.body;
+    //const FECHA_ACTUAL = moment().tz(zonaHoraria);
     try {
         //Verifica si existen el usuario
         const verificar = await verificarUsuario(CORREO);
         if (verificar.success) return res.status(400).json({ message: ["Usuario registrado"] });
+        const verificarUser = await verificarNombre(NOMBRE_USUARIO);
+        if (verificarUser.success) return res.status(400).json({ message: ["Nombre de usuario registrado"] });
+        //console.log(verificarUser);
         //Encripta la contraseña
         const passwordHash = await bcrypt.hash(CONTRASENIA, 10);
         //Agrega el usuario a la base
@@ -33,6 +38,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     const { CORREO, CONTRASENIA } = req.body;
+    
     //console.log(CORREO, CONTRASENIA);
     try {
         //Verifica la existencia del usuario
@@ -81,16 +87,19 @@ export const reset = async (req, res) => {
 
 export const resetpass = async (req, res) => {
     try {
-        const token = req.user.id;
-        //console.log("token: ", token);
-        //if (!token) return res.status(401).json({ message: ["No autorizado"] });
-        const verificar = await autenticarUsuario(token);
-        if (!verificar.success) return res.status(400).json({ message: ["No autorizado"] });
-        return res.json({
-            ID: verificar.userData[0].ID,
-            NOMBRE_USUARIO: verificar.userData[0].NOMBRE_USUARIO,
-            CORREO: verificar.userData[0].CORREO,
-            FECHA_CREACION: verificar.userData[0].FECHA_CREACION
+        const {TOKEN,CONTRASENIA} = req.body;
+        //console.log(req.body);
+        if (!TOKEN) return res.status(401).json({ message: ["No autorizado"] });
+        jwt.verify(TOKEN, SECRETPASS_TOKEN, async (error, user) => {
+            if (error) return res.status(401).json({ message: ["Token expirado"] });
+            //console.log(user.id);
+            const passwordHash = await bcrypt.hash(CONTRASENIA, 10);
+            const cambiar = await cambiarContrasenia(user.id, passwordHash);
+            //console.log(cambiar.success);
+            if (!cambiar.success) return res.status(400).json({ message: ["Error al cambiar la contraseña"] });
+            return res.status(200).json({
+                message: "Contraseña cambiada con exito"
+            });
         })
     } catch (error) {
         return res.status(500).json({ message: error.message })

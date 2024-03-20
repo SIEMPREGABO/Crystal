@@ -41,27 +41,27 @@ export const Login = () => {
                             <label className="col">Correo: </label>
                             <input
                                 type="email"
-                                name="email"
+                                name="CORREO"
                                 placeholder='alguien@example.com'
                                 className="col"
 
-                                {...register("email", { required: true, message: "campo requerido" })}
+                                {...register("CORREO", { required: true, message: "campo requerido" })}
                             />
 
-                            {errors.email && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.email.message}</div>}
+                            {errors.CORREO && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.CORREO.message}</div>}
 
                         </div>
                         <div className="pb-4 px-4 pt-2 row align-items-center">
                             <label className="col">Contraseña: </label>
                             <input
                                 type="password"
-                                name="password"
+                                name="CONTRASENIA"
                                 placeholder='Contraseña'
                                 className="col"
 
-                                {...register("password", { required: true, message: "campo requerido" })}
+                                {...register("CONTRASENIA", { required: true, message: "campo requerido" })}
                             />
-                            {errors.password && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.password.message}</div>}
+                            {errors.CONTRASENIA && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.CONTRASENIA.message}</div>}
                         </div>
                         <div className="px-4 pb-4 pt-3 row align-items-center">
                             <div className="px-1  col">

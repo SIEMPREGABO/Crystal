@@ -14,8 +14,10 @@ export const Reset = () => {
     } = useForm({
         resolver: zodResolver(resetSchema)
     });
+
+    
     const navigate = useNavigate();
-    const {reseterrors,  message, resetToken, IsSended } = useAuth();
+    const {reseterrors,  message, resetToken} = useAuth();
 
     const onSubmit = handleSubmit(async (values) => {
         resetToken(values);
@@ -38,12 +40,12 @@ export const Reset = () => {
                             <label className="col">Introduzca el correo registrado: </label>
                             <input
                                 type="email"
-                                name="email"
+                                name="CORREO"
                                 placeholder='alguien@example.com'
                                 className="col"
-                                {...register("email", { required: true})}
+                                {...register("CORREO", { required: true, message: "Campo requerido"})}
                             />
-                            {errors.email && <div className=" bg-danger mt-4 me-2 text-white shadow">{errors.email.message}</div>}
+                            {errors.CORREO && <div className=" bg-danger mt-4 me-2 text-white shadow">{errors.CORREO.message}</div>}
 
                         </div>
                         <div className="px-1 pb-4 pt-2 col">

@@ -5,21 +5,18 @@ import { Link } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 import moment from "moment";
 import { useEffect } from "react";
+import { useProject } from "../context/projectContext";
 
 
 export const Panel = () => {
     const { user } = useAuth();
-    const fecha = moment.utc(user.created).format('DD-MM-YYYY');
-    const [showDefaultimage, setShowDefaultimage] = useState(true);
+    //const {getProjects} = useProject();
+    const fecha = moment.utc(user.FECHA_CREACION).format('DD-MM-YYYY');
 
     useEffect(() => {
-        if (user.image === null) {
-            setShowDefaultimage(false);
-        } else {
-            setShowDefaultimage(true);
-        }
+        //const projects = getProjects();
     })
-
+    /*
     const handleImage = (event) => {
         const selectedFile = event.target.files[0];
 
@@ -37,7 +34,7 @@ export const Panel = () => {
             };
             reader.readAsDataURL(selectedFile)
         }
-    }
+    }*/
 
 
     return (
@@ -48,8 +45,8 @@ export const Panel = () => {
                         <div className="text-bg-dark overflow-hidden col">
                             <div className="mt-3 pt-3 ms-5 ps-5">
 
-                                <h2 className="display-5">Bienvenido {user.name}</h2>
-                                <p className="lead">ID:{user.id}</p>
+                                <h2 className="display-5">Bienvenido {user.NOMBRE_USUARIO}</h2>
+                                <p className="lead">ID:{user.ID}</p>
                                 <p className="lead">Unido desde {fecha}</p>
 
 

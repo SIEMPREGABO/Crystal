@@ -1,51 +1,64 @@
 import {z} from 'zod';
 
 export const registerSchema = z.object({
-    NOMBRE_USUARIO: z.string({
-        required_error: 'El nombre de usuario es requerido'
-    }),
-    NOMBRE_PILA: z.string({
-        required_error: 'El nombre es requerido'
-    }),
-    APELLIDO_PATERNO: z.string({
-        required_error: 'El apellido paterno es requerido'
-    }),
-    APELLIDO_MATERNO: z.string({
-        required_error: 'El apellido materno es requerido'
-    }),
-    CORREO: z.string({
-        required_error: 'El email es requerido'
-    }).email({
-        message : 'Correo Invalido'
-    }),
+    NOMBRE_USUARIO: z.string().nonempty({
+        message: "EL nombre de usuario es requerido"
+    }).regex(
+        new RegExp(/^[a-zA-Z0-9\-\._]+$/), {message: "Nombre Usuario Invalido"}
+    ),
+    NOMBRE_PILA: z.string().nonempty({
+        message: "El nombre es requerido"
+    }).regex(
+        new RegExp(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/), { message: "Nombre Invalido" }
+    ),
+    APELLIDO_PATERNO: z.string().nonempty({
+        message: "El apellido paterno es requerido"
+    }).regex(
+        new RegExp(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/), { message: "Apellido Paterno Invalido" }
+    ),
+    APELLIDO_MATERNO: z.string().nonempty({
+        message: "El apellido materno es requerido"
+    }).regex(
+        new RegExp(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/), { message: "Apellido Materno Invalido" }
+    ),
+    CORREO: z.string().nonempty({
+        message: "El correo es requerido"
+    }).regex(
+        new RegExp(/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/), { message: "Correo Invalido" }
+    ),
     CONTRASENIA: z.string({
         required_error: 'La contraseña es requerida'
     }).min(8, {message: "Mínimo 8 caracteres"}),
-    TELEFONO: z.string({
-        required_error: 'El número es requerido'
-    }).min(12,{message: "Numero Invalido 'xx-xxxx-xxxx'"}),
-    NUMERO_BOLETA: z.string({
-        required_error: 'El número de boleta es requerido'
-    }).min(10,{message: "El numero de boleta es de 10 dígitos"})
+    TELEFONO: z.string().nonempty({
+        message: "El número es requerido"
+    }).regex(
+        new RegExp(/^\d{10}$/), { message: "Numero Invalido " }
+    ),
+    NUMERO_BOLETA: z.string().nonempty({
+        message: "La boleta es requerida"
+    }).regex(
+        new RegExp(/^\d{10}$/),{message:  "Boleta Invalida"}
+    )
 });
 
 export const loginSchema = z.object({
-    CORREO : z.string({
-        required_error : 'El email es requerido'
-    }).email({
-        message: 'Correo Invalido'
-    }),
+    CORREO: z.string({
+    }).nonempty({
+        message: "El email es requerido"
+    }).regex(
+        new RegExp(/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/),
+        { message: 'Correo Invalido' }),
     CONTRASENIA: z.string({
         required_error: 'La contraseña es requerida'
     }).min(8, {message: "Mínimo 8 caracteres"})
 });
 
 export const resetSchema = z.object({
-    CORREO : z.string({
-        required_error : 'El email es requerido'
-    }).email({
-        message: 'Correo Invalido'
-    })
+    CORREO: z.string().nonempty({
+        message: "El correo es requerido"
+    }).regex(
+        new RegExp(/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/), { message: 'Correo Invalido' }
+    )
 });
 
 export const resetpasswordSchema = z.object({
