@@ -13,6 +13,39 @@ export const loginSchema = z.object({
     }).min(8, { message: "Minimo 8 caracteres" })
 });
 
+export const updateSchema = z.object({
+    NOMBRE_USUARIO: z.string().nonempty({
+        message: "EL nombre de usuario es requerido"
+    }).regex(
+        new RegExp(/^[a-zA-Z0-9\-\._]+$/), {message: "Nombre Usuario Invalido"}
+    ),
+    NUMERO_BOLETA: z.string().nonempty({
+        message: "La boleta es requerida"
+    }).regex(
+        new RegExp(/^\d{10}$/),{message:  "Boleta Invalida"}
+    ),
+    NOMBRE_PILA: z.string().nonempty({
+        message: "El nombre es requerido"
+    }).regex(
+        new RegExp(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/), { message: "Nombre Invalido" }
+    ),
+    APELLIDO_PATERNO: z.string().nonempty({
+        message: "El apellido paterno es requerido"
+    }).regex(
+        new RegExp(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/), { message: "Apellido Paterno Invalido" }
+    ),
+    APELLIDO_MATERNO: z.string().nonempty({
+        message: "El apellido materno es requerido"
+    }).regex(
+        new RegExp(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/), { message: "Apellido Materno Invalido" }
+    ),
+    TELEFONO: z.string().nonempty({
+        message: "El número es requerido"
+    }).regex(
+        new RegExp(/^\d{10}$/), { message: "Numero Invalido" }
+    )
+});
+
 export const resetSchema = z.object({
     CORREO: z.string().nonempty({
         message: "El correo es requerido"

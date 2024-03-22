@@ -56,7 +56,12 @@ export const login = async (req, res) => {
             ID: verificar.userData[0].ID,
             CORREO: verificar.userData[0].CORREO,
             NOMBRE_USUARIO: verificar.userData[0].NOMBRE_USUARIO,
-            FECHA_CREACION: verificar.userData[0].FECHA_CREACION
+            FECHA_CREACION: verificar.userData[0].FECHA_CREACION,
+            NOMBRE_PILA: verificar.userData[0].NOMBRE_PILA,
+            APELLIDO_PATERNO: verificar.userData[0].APELLIDO_PATERNO,
+            APELLIDO_MATERNO: verificar.userData[0].APELLIDO_MATERNO,
+            TELEFONO: verificar.userData[0].TELEFONO,
+            NUMERO_BOLETA: verificar.userData[0].NUMERO_BOLETA
         });
     } catch (error) {
         res.status(500).json({ message: error.message })

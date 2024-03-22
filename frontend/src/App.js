@@ -20,27 +20,27 @@ import { ProjectProvider } from './context/projectContext.js';
 function App() {
   return (
     <AuthProvider>
+      <ProjectProvider>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path='/reset' element={<Reset />} />
+          <Route path='/resetpass/:token' element={<ResetPass />} />
+          <Route element={<ProtectedRoute />}>
 
-      <Header />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path='/reset' element={<Reset />} />
-        <Route path='/resetpass/:token' element={<ResetPass />} />
-        <Route element={<ProtectedRoute />}>
-          <ProjectProvider>
             <Route path="/panel" element={<Panel />} />
             <Route path="/configurar-proyecto" element={<FormProyect />} />
             <Route path="/configurar-perfil" element={<ConfigProfile />} />
             <Route path="/Proyecto/*" element={<Proyecto />}>
               <Route index element={<Proyecto />} />
             </Route>
-          </ProjectProvider>
-        </Route>
-      </Routes>
-      <Footer />
 
+          </Route>
+        </Routes>
+        <Footer />
+      </ProjectProvider>
     </AuthProvider>
   );
 }
