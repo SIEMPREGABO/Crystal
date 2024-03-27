@@ -165,10 +165,8 @@ export const ConfigProfile = () => {
                                 value={user.CORREO}
                                 disabled
                             />
-
-
                         </div>
-
+                        
                         <div className="pt-3 pb-2 px-3 justify-content-evenly">
                             <input className=" btn btn-dark " type="submit" value="Guardar" />
                         </div>

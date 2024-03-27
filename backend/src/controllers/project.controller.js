@@ -1,34 +1,28 @@
 import moment from 'moment-timezone';
-import { generarEntregas, generarIteraciones } from '../libs/makerProject.js';
+import { generarEntregasQuery,generarIteracionesQuery} from '../libs/makerProject.js';
 import { zonaHoraria } from '../config.js';
-
 
 export const createProject = async (req, res) => {
     const FECHA_ACTUAL = moment().tz(zonaHoraria);
-    const { NOMBRE_PROYECTO, OBJETIVO, DESCRIPCION, FECHA_INICIO, FECHA_TERMINO, ENTREGAS, ITERACIONES } = req.body;
-    //La constitucion son los dias que tienen antes de comenzar el proyecto #Quitar
-    try {
-        const FECHA_INICIAL = moment(FECHA_INICIO).tz(zonaHoraria);const FECHA_FINAL = moment(FECHA_TERMINO).tz(zonaHoraria);
+    const {NOMBRE_PROYECTO, OBJETIVO, DESCRIPCION, FECHA_INICIO, FECHA_TERMINO, ENTREGAS } = req.body;
+    try{
+        //NOMBRE_PROYECTO, OBJETIVOS, DESCRIPCION, FECHA_ACTUAL, FECHA_INICIO, FECHA_TERMINO, ENTREGAS
+        const FECHA_INICIAL = moment(FECHA_INICIO).tz(zonaHoraria).add(1, 'days'); const FECHA_FINAL = moment(FECHA_TERMINO).tz(zonaHoraria).endOf('day');
+
         if (FECHA_INICIAL.isBefore(FECHA_ACTUAL)) return res.status(400).json({ message: ["Fecha inicial incorrecta"] });
         if (FECHA_FINAL.isBefore(FECHA_INICIAL)) return res.status(400).json({ message: ["Fecha final incorrecta"] });
-        const DIAS_PROYECTO = Math.floor((FECHA_FINAL - FECHA_INICIAL) / (1000 * 60 * 60 * 24));
-        
-        if(DIAS_PROYECTO < 90) return res.status(400).json({message: ["El proyecto debe durar minimo 3 meses"]});
-        if(DIAS_PROYECTO > 365) return res.status(400).json({message: ["El proyecto debe durar maximo 1 año"]});
-        
-        const DIAS_ENTREGA = Math.floor(DIAS_PROYECTO/ENTREGAS); const DIAS_RESTANTES = DIAS_PROYECTO%ENTREGAS;
-        const arregloEntrega = generarEntregas(ENTREGAS,DIAS_ENTREGA,DIAS_RESTANTES,FECHA_INICIAL);
-        console.log(arregloEntrega);
-        for(let i=0; i<arregloEntrega.length-1;i++){
-            const FECHA_INICIAL_ITERACION= moment(arregloEntrega[i]);
-            const FECHA_FINAL_ITERACION = moment(arregloEntrega[i+1]);
-            const DIAS_ENTREGA= Math.floor((FECHA_FINAL_ITERACION - FECHA_INICIAL_ITERACION) / (1000 * 60 * 60 * 24));
-            const NUM_ITERACION = Math.floor(DIAS_ENTREGA/7); const DIAS_RESTANTES_ITERACION = DIAS_ENTREGA%7;
-            const arrayIteracion = generarIteraciones(NUM_ITERACION,7,DIAS_RESTANTES_ITERACION,FECHA_INICIAL_ITERACION);
-            console.log(arrayIteracion);
-        }
-        //const arregloIteraciones = generarIteraciones(arregloEntrega);
 
+        const DIAS_PROYECTO = FECHA_FINAL.diff(FECHA_INICIAL, 'days') + 1;
+
+        if (DIAS_PROYECTO < 90) return res.status(400).json({ message: ["El proyecto debe durar minimo 3 meses"] });
+        if (DIAS_PROYECTO > 365) return res.status(400).json({ message: ["El proyecto debe durar maximo 1 año"] });
+
+        const ARREGLOPROYECTO = generarEntregasQuery(ENTREGAS, FECHA_INICIAL, FECHA_FINAL);
+        //console.log(ARREGLOPROYECTO," entregas");
+        for(let i=0;i<ARREGLOPROYECTO.length;i++){
+            const ARREGLOITERACION = generarIteracionesQuery(moment(ARREGLOPROYECTO[i].INICIO),moment(ARREGLOPROYECTO[i].FIN));
+            //console.log(ARREGLOITERACION, " iteraciones");
+        }
     } catch (error) {
         res.status(500).json({ message: [error.message] })
     }
@@ -36,18 +30,18 @@ export const createProject = async (req, res) => {
 
 export const getProjects = async (res, req) => {
     try {
-        const {token} = req.cookies;
+        const { token } = req.cookies;
         //if(!token) return res.status(401).json({message: ["No autorizado"]});
         jwt.verify(token, SECRET_TOKEN, async (error, user) => {
             if (error) return res.status(401).json({ message: ["No autorizado"] });
             const proyectos = await projectsUsuario(user.id);
             if (!proyectos.success) return res.status(401).json({ message: ["No autorizado"] });
             return res.json({
-                PROYECTOS: proyectos.projects 
+                PROYECTOS: proyectos.projects
             })
         })
     } catch (error) {
-        res.status(500).json({message: [error.message]})
+        res.status(500).json({ message: [error.message] })
     }
 }
 
