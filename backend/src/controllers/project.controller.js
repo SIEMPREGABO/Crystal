@@ -5,6 +5,7 @@ import { zonaHoraria } from '../config.js';
 
 export const createProject = async (req, res) => {
     const FECHA_ACTUAL = moment().tz(zonaHoraria);
+    console.log(req.body);
     const { NOMBRE_PROYECTO, OBJETIVO, DESCRIPCION, FECHA_INICIO, FECHA_TERMINO, ENTREGAS, ITERACIONES } = req.body;
     //La constitucion son los dias que tienen antes de comenzar el proyecto #Quitar
     try {
@@ -18,7 +19,7 @@ export const createProject = async (req, res) => {
         
         const DIAS_ENTREGA = Math.floor(DIAS_PROYECTO/ENTREGAS); const DIAS_RESTANTES = DIAS_PROYECTO%ENTREGAS;
         const arregloEntrega = generarEntregas(ENTREGAS,DIAS_ENTREGA,DIAS_RESTANTES,FECHA_INICIAL);
-        console.log(arregloEntrega);
+        console.log(arregloEntrega, "entrega");
         for(let i=0; i<arregloEntrega.length-1;i++){
             const FECHA_INICIAL_ITERACION= moment(arregloEntrega[i]);
             const FECHA_FINAL_ITERACION = moment(arregloEntrega[i+1]);

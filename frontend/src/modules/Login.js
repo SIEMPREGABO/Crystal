@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Footer from "./Footer";
 import { useForm } from 'react-hook-form'
 import { loginSchema } from '../schemas/auth.js';
 import { useAuth } from '../context/authContext';

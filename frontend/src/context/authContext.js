@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const res = await requestRegister(user);
-      setUser(res.data);
+      //setUser(res.data);
       console.log(res.data);
       setMessage(["Usuario registrado correctamente"]);
     } catch (error) {
@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }) => {
     try {
       //console.log(user);
       const res = await requestPass(user);
-      //console.log(res.data);
+      console.log(res.data);
       setMessagepass("Contraseña cambiada con exito");
     } catch (error) {
       setResetpasserrors(error.response.data.message);
@@ -129,8 +129,9 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   }
 
-  const updateUser = async () =>{
+  const updateUser = async (user) =>{
     try {
+      console.log(user);
       const res = await requestUpdate(user);
       setUser(res.data);
       setMessageupdate("Informacion Actualizada");
@@ -152,7 +153,7 @@ export const AuthProvider = ({ children }) => {
         const res = await requestVerify(cookies.token);
         if (!res.data) return setIsAuthenticated(false);
         setIsAuthenticated(true);
-        setUser(res.data);
+        //setUser(res.data);
         setLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
