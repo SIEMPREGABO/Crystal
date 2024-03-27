@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import Footer from "./Footer.js";
+
 import { useForm } from 'react-hook-form'
 import { resetpassSchema } from '../schemas/auth.js';
 import { useAuth } from '../context/authContext.js';

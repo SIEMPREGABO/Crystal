@@ -1,6 +1,3 @@
-import Footer from "./Footer";
-import { useState } from "react";
-import imagedefault from "../images/profile.png";
 import { Link } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 import moment from "moment";

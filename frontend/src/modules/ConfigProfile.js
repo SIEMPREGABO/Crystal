@@ -162,8 +162,9 @@ export const ConfigProfile = () => {
                                 type="email"
                                 name="email"
                                 placeholder='alguien@example.com'
-                                value={user.CORREO}
+                               
                                 disabled
+                                {...register("CORREO", { required: true })}
                             />
                         </div>
                         

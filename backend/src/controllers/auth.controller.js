@@ -3,7 +3,7 @@ import { createAccessToken, createPasswordToken } from '../libs/jwt.js';
 import jwt from 'jsonwebtoken';
 import { SECRET_TOKEN, SECRETPASS_TOKEN } from '../config.js';
 import { sendemailInvite, sendemailReset } from '../middlewares/send.mail.js';
-import { actualizarPass, agregarUsuario, autenticarUsuario, extraerUsuario, verificarNombre, verificarUsuario, cambiarContrasenia } from '../querys/querys.js';
+import { actualizarPass, correoUsuario, agregarUsuario, autenticarUsuario, extraerUsuario, verificarNombre, verificarUsuario, cambiarContrasenia, actualizarUsuario, actualizarUsuarioNombre } from '../querys/authquerys.js';
 import moment from 'moment-timezone';
 
 
@@ -26,7 +26,7 @@ export const register = async (req, res) => {
         //Extrae el usuario desde la base
         const User = await extraerUsuario(CORREO);
         res.json({
-            id: User[0].ID,
+            ID: User[0].ID,
             NOMBRE_USUARIO: User[0].NOMBRE_USUARIO,
             CORREO: User[0].CORREO,
             FECHA_CREACION: User[0].FECHA_CREACION
@@ -110,7 +110,7 @@ export const resetpass = async (req, res) => {
         return res.status(500).json({ message: error.message })
     }
 };
-
+/*
 export const changePassword = async (req, res) => {
     const { CORREO, CONTRASENIA } = req.body;
     try {
@@ -124,7 +124,7 @@ export const changePassword = async (req, res) => {
 
     }
 }
-
+*/
 
 export const logout = (req, res) => {
     res.cookie('token', "", { expires: new Date(0) })
@@ -159,3 +159,36 @@ export const verifyToken = async (req, res) => {
     })
 }
 
+export const updateUser = async (req, res) => {
+    const {NOMBRE_USUARIO,NUMERO_BOLETA,NOMBRE_PILA,APELLIDO_PATERNO,APELLIDO_MATERNO,TELEFONO, CORREO} = req.body;
+    let actualizar;
+    try {
+        const verificarUser = await correoUsuario(CORREO);
+        if(verificarUser.userData[0].NOMBRE_USUARIO == NOMBRE_USUARIO){
+            actualizar = await actualizarUsuario(NUMERO_BOLETA,NOMBRE_PILA,APELLIDO_PATERNO,APELLIDO_MATERNO,TELEFONO, CORREO);
+            if(!actualizar.success) return res.status(500).json({ message: ["Error al actualizar los datos"] });
+        }else{
+            const verificarUser = await verificarNombre(NOMBRE_USUARIO);
+            if (verificarUser.success) return res.status(400).json({ message: ["Nombre de usuario registrado"] });
+            actualizar = await actualizarUsuarioNombre(NOMBRE_USUARIO,NUMERO_BOLETA,NOMBRE_PILA,APELLIDO_PATERNO,APELLIDO_MATERNO,TELEFONO, CORREO);
+            if(!actualizar.success) return res.status(500).json({ message: ["Error al actualizar los datos"] });
+        } 
+        const User = await extraerUsuario(CORREO);
+        return res.status(200).json({
+            ID: User[0].ID,
+            NOMBRE_USUARIO: User[0].NOMBRE_USUARIO,
+            CORREO: User[0].CORREO,
+            FECHA_CREACION: User[0].FECHA_CREACION,
+            NUMERO_BOLETA: User[0].NUMERO_BOLETA,
+            NOMBRE_PILA: User[0].NOMBRE_PILA,
+            APELLIDO_MATERNO: User[0].APELLIDO_MATERNO,
+            APELLIDO_PATERNO: User[0].APELLIDO_PATERNO,
+            TELEFONO: User[0].TELEFONO
+        });
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+
+    }
+    
+
+}
