@@ -15,35 +15,41 @@ export const ProjectProvider = ({ children }) => {
     const [project, setProject] = useState([]);
     const [projecterrors, setProjecterrors] = useState([]);
     const [IsCreated, setIsCreated] = useState(false);
-    const [isLoading, setLoading] = useState(true);
+    const [message, setMessage] = useState([]);
+    //const [IsLoading, setLoading] = useState(true);
 
-    /*useEffect(() => {
+    useEffect(() => {
       if (message.length > 0) {
         const timer = setTimeout(() => {
           setMessage([]);
+          setIsCreated(true);
         }, 5000);
         return () => clearTimeout(timer);
       }
-    }, [message]);
-  
-    useEffect(() => {
-      if (loginerrors.length > 0 || registererrors.length > 0 || reseterrors.length > 0) {
+      if(projecterrors.length > 0){
         const timer = setTimeout(() => {
-          setLoginerrors([]);
-          setRegistererrors([]);
-          setReseterrors([]);
+          setProjecterrors([]);
         }, 5000);
         return () => clearTimeout(timer);
       }
-    }, [loginerrors,registererrors, reseterrors]);
-    */
+      if (IsCreated) {
+        const timer = setTimeout(() => {
+          setIsCreated(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+      }
+      
+    }, [IsCreated, projecterrors, message]);
+
+    
 
     const create = async (project) => {
         try {
             const res = await requestCreate(project);
             //setProject(res.data);
-            setIsCreated(true);
+            
             console.log(res.data);
+            setMessage("Proyecto creado con exito");
             //console.log(error.response.data.message);
         } catch (error) {
             console.log(error.response);
@@ -64,37 +70,13 @@ export const ProjectProvider = ({ children }) => {
       }
   };
 
-
-    /*useEffect(() => {
-      //metermos al resetpass
-      const checkLogin = async () => {
-        const cookies = Cookies.get();
-        if (!cookies.token) {
-          setIsAuthenticated(false);
-          setLoading(false);
-          return;
-        }
-  
-        try {
-          const res = await requestVerify(cookies.token);
-          if (!res.data) return setIsAuthenticated(false);
-          setIsAuthenticated(true);
-          setUser(res.data);
-          setLoading(false);
-        } catch (error) {
-          setIsAuthenticated(false);
-          setLoading(false);
-        }
-      };
-      checkLogin();
-    }, []);*/
-
     return (
         <ProjectContext.Provider
             value={{
                 project,
                 projecterrors,
                 IsCreated,
+                message,
                 create,
                 getProject
             }}

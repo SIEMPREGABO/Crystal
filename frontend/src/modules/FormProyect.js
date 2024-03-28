@@ -11,11 +11,11 @@ export const FormProyect = () => {
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: zodResolver(loginSchema)
+        resolver: zodResolver(projectSchema)
     });
 
     const navigate = useNavigate();
-    const {  create, projecterrors, IsCreated} = useAuth();
+    const {  create, projecterrors, IsCreated, message} = useProject();
     
 
     const onSubmit = handleSubmit(async (values) => {
@@ -29,12 +29,13 @@ export const FormProyect = () => {
     return (
         <div className="container-md ">
             <div className="container-fluid position-relative p-4 text-center">
+                {message && <div className=" bg-success mt-2 me-2 text-white shadow">{message}</div>}
                 {projecterrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{projecterrors}</div>}
 
                 <div className="p-3 mb-3 text-center">
                     <h1>Crear proyecto</h1>
                 </div>
-                <form className="shadow" onSubmit={handleSubmit(onSubmit)}>
+                <form className="" onSubmit={handleSubmit(onSubmit)}>
                 <div className="pt-1 pb-3 row px-3 justify-content-evenly">
                     <label className="col-4 text-end">Titulo del proyecto: </label>
                     <div className="col px-2">

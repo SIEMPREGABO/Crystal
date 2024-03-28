@@ -1,6 +1,3 @@
-import Footer from "./Footer";
-import { useState } from "react";
-import imagedefault from "../images/profile.png";
 import { Link } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 import moment from "moment";
@@ -16,25 +13,7 @@ export const Panel = () => {
     useEffect(() => {
         //const projects = getProjects();
     })
-    /*
-    const handleImage = (event) => {
-        const selectedFile = event.target.files[0];
-
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const image = {
-                    name: selectedFile.name,
-                    type: selectedFile.type,
-                    data: e.target.result,
-                    size: selectedFile.size
-                }
-                const imagenJSONString = JSON.stringify(image);
-                console.log(imagenJSONString);
-            };
-            reader.readAsDataURL(selectedFile)
-        }
-    }*/
+ 
 
 
     return (
@@ -46,7 +25,7 @@ export const Panel = () => {
                             <div className="mt-3 pt-3 ms-5 ps-5">
 
                                 <h2 className="display-5">Bienvenido {user.NOMBRE_USUARIO}</h2>
-                                <p className="lead">ID:{user.ID}</p>
+                                <p className="lead">ID: {user.ID}</p>
                                 <p className="lead">Unido desde {fecha}</p>
 
 

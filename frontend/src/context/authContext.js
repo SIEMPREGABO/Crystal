@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import { requestLogin, requestRegister,requestLogout, requestVerify, requestReset, requestPass} from "../requests/auth.js";
+import { requestLogin, requestRegister,requestLogout, requestVerify, requestReset, requestPass, requestUpdate} from "../requests/auth.js";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -16,12 +16,17 @@ export const AuthProvider = ({ children }) => {
   const [IsSended, setIsSended] = useState(false);
   const [IsAuthenticated, setIsAuthenticated] = useState(false);
   const [IsChanged, setIsChanged] = useState(false);
+
   const [registererrors, setRegistererrors] = useState ([]);
   const [reseterrors, setReseterrors] = useState([]);
   const [resetpasserrors, setResetpasserrors] = useState([]);
   const [loginerrors, setLoginerrors] = useState([]);
+  const [updateerrors, setUpdateerrors] = useState([]);
+
   const [message, setMessage] = useState([]);
   const [messagepass, setMessagepass] = useState([]);
+  const [messageupdate, setMessageupdate] = useState([]);
+
   const [isLoading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -48,18 +53,25 @@ export const AuthProvider = ({ children }) => {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [messagepass, IsChanged]);
+    if(messageupdate.length > 0){
+      const timer = setTimeout(() => {
+        setMessageupdate([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [messagepass, IsChanged, messageupdate]);
 
   useEffect(() => {
-    if (loginerrors.length > 0 || registererrors.length > 0 || reseterrors.length > 0) {
+    if (loginerrors.length > 0 || registererrors.length > 0 || reseterrors.length || updateerrors.length > 0) {
       const timer = setTimeout(() => {
         setLoginerrors([]);
         setRegistererrors([]);
         setReseterrors([]);
+        setUpdateerrors([]);
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [loginerrors,registererrors, reseterrors]);
+  }, [loginerrors,registererrors, reseterrors, updateerrors]);
   
 
   const signin = async (user) => {
@@ -78,7 +90,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const res = await requestRegister(user);
-      setUser(res.data);
+      //setUser(res.data);
       console.log(res.data);
       setMessage(["Usuario registrado correctamente"]);
     } catch (error) {
@@ -103,7 +115,7 @@ export const AuthProvider = ({ children }) => {
     try {
       //console.log(user);
       const res = await requestPass(user);
-      //console.log(res.data);
+      console.log(res.data);
       setMessagepass("Contraseña cambiada con exito");
     } catch (error) {
       setResetpasserrors(error.response.data.message);
@@ -115,6 +127,17 @@ export const AuthProvider = ({ children }) => {
     console.log(res);
     setIsAuthenticated(false);
     setUser(null);
+  }
+
+  const updateUser = async (user) =>{
+    try {
+      console.log(user);
+      const res = await requestUpdate(user);
+      setUser(res.data);
+      setMessageupdate("Informacion Actualizada");
+    } catch (error) {
+      setUpdateerrors(error.response.data.message);      
+    }
   }
 
   useEffect(() => {
@@ -130,7 +153,7 @@ export const AuthProvider = ({ children }) => {
         const res = await requestVerify(cookies.token);
         if (!res.data) return setIsAuthenticated(false);
         setIsAuthenticated(true);
-        setUser(res.data);
+        //setUser(res.data);
         setLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
@@ -150,6 +173,8 @@ export const AuthProvider = ({ children }) => {
         registererrors,
         reseterrors,
         resetpasserrors,
+        updateerrors,
+        messageupdate,
         message,
         isLoading,
         IsChanged,
@@ -158,6 +183,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         resetToken,
         resetPass,
+        updateUser,
         logout
       }}
     >
