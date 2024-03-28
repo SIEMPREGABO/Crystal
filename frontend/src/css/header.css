@@ -1,0 +1,23 @@
+.titulo{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: xx-large;
+    margin-left: 5px;
+}
+
+.i-lista-i1{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: large;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.i-lista-i2{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: large;
+    margin-left: 10px;
+    margin-right: 50px;
+}
+
+nav{
+    z-index: 1;
+}

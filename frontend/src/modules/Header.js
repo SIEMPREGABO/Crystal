@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-
-
+import logo from '../images/logoClear-c.png';
+import '../css/header.css';
 export const Header = () => {
 
     const {  IsAuthenticated, logout} = useAuth();
@@ -9,9 +9,9 @@ export const Header = () => {
     
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <nav className="navbar navbar-expand-lg navbar-light bg-info bg-opacity-25 sticky-top" >
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">Clear</Link>
+                    <Link className="navbar-brand" to="/" style={{width: 300+"px"}}><img src={logo} style={{height: 75+"px", marginLeft: 50 + "px", display: 'inline-block'}} alt="LogoCrystalClear"/><h1 className='titulo' style={{display: 'inline-block', color: '#fff'}}>C L E A R</h1></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -33,8 +33,8 @@ export const Header = () => {
                                         }}>Cerrar Sesión</Link></li>
                                     </ul>
                                 </>) : (<> <ul className="navbar-nav mb-2 mb-lg-0">
-                                    <li className="nav-item"><Link className="nav-link" to="/login">Ingresar</Link></li>
-                                    <li className="nav-item"><Link className="nav-link" to="/register">Registro</Link></li>
+                                    <li className="nav-item i-lista-i1" ><Link className="nav-link border-light rounded-pill" to="/login" style={{color: '#fff'}}>Iniciar Sesión</Link></li>
+                                    <li className="nav-item i-lista-i2" ><Link className="nav-link border-light rounded-pill" to="/register" style={{color: '#fff'}}>Registrarse</Link></li>
                                 </ul></>)}
                         </div>
                     </div>

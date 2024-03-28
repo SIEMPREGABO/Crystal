@@ -1,0 +1,44 @@
+.divp{
+    z-index: 1;
+}
+
+main{
+    color: white;
+}
+
+.btn{
+    color: white;
+}
+.principal{
+    display: grid;
+    /*background-image: url('../images/fondoHome.jpg');*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+}
+
+.container-md{
+    z-index: 3;
+    color: white;
+}
+.circle{
+    height: 125px;
+    width: 125px;
+}
+
+.logo{
+    height: 125px;
+    width: 125px;
+}
+
+.background{
+    position: relative;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.logo-titulo .titulo{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
