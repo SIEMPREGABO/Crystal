@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import styles from "../css/register.module.css"
+import ParticlesBackground  from "./ParticlesBackground.js";
 
 export const Register = () => {
     const {
@@ -30,205 +31,118 @@ export const Register = () => {
 
 
     return (
-        <div>
-            <div className="container-fluid position-relative p-4 text-center">
+        <div className={styles.register}>
+            <div className={styles.container} id='main'>
                 {message && <div className=" bg-success mt-2 me-2 text-white shadow">{message}</div>}
                 {registererrors && <div className=" bg-danger mt-2 me-2 text-white shadow">{registererrors}</div>}
                 {errors.refine && <div className=" bg-danger mt-2 me-2 text-white shadow">{errors.refine.message}</div>}
-
-                <div className="col-md-6 px-2 mx-auto mt-5">
-                    <form className="shadow" onSubmit={handleSubmit(onSubmit)} >
-                        <label className="px-2 pt-3 pb-1 h4">Registro</label>
-
-                        <div className="pt-3 px-5 row align-items-center text-start">
-                            <label className="col">Nombre de Usuario </label>
-                            <label className="col ps-5">Boleta</label>
+                <div className={styles['overlay-container']}>
+                    <div className={styles.overlay}>
+                        <div className={styles['overlay-right']}>
+                        <h1>Ya tienes una cuenta?</h1>
+                        <p>Inicia Sesión para volver al trabajo </p>
+                        <Link to="/login"><button id={styles.signIn}>Iniciar Sesión</button></Link>
                         </div>
-
-                        <div className="pt-1 pb-2 px-3 row justify-content-evenly">
-                            <input
-                                className="col-5"
-                                type="text"
-                                name="NOMBRE_USUARIO"
-                                placeholder='Nombre Usuario'
-                                {...register("NOMBRE_USUARIO", { required: true })}
-                            />
-                            <input
-                                className="col-5"
-                                type="text"
-                                name="NUMERO_BOLETA"
-                                placeholder='Boleta'
-                                {...register("NUMERO_BOLETA", { required: true })}
-                            />
-                        </div>
-
-                        <div className=" row justify-content-evenly">
-                            {errors.NOMBRE_USUARIO &&
-                                <div className=" col-5 ps-3">
-                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.NOMBRE_USUARIO.message}</div>
-                                </div>}
-
-                            {errors.NUMERO_BOLETA &&
-                                <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.NUMERO_BOLETA.message}</div>
-                                </div>}
-                        </div>
-
-
-                        <div className="pt-2 px-5 row align-items-center text-start">
-                            <label className="col">Nombre (s) </label>
-                            <label className="col ps-5">Apellido Paterno </label>
-                        </div>
-
-                        <div className="pt-1 pb-2 px-3 row justify-content-evenly">
-                            <input
-                                className="col-5"
-                                type="text"
-                                name="NOMBRE_PILA"
-                                placeholder='Nombre'
-                                {...register("NOMBRE_PILA", { required: true })}
-                            />
-                            <input
-                                className="col-5"
-                                type="text"
-                                name="APELLIDO_PATERNO"
-                                placeholder='Apellido Paterno'
-                                {...register("APELLIDO_PATERNO", { required: true })}
-                            />
-                        </div>
-
-                        <div className=" row justify-content-evenly">
-                            {errors.NOMBRE_PILA &&
+                    </div>
+                    
+                </div>
+                <div className={styles['sign-in']}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <h1>Crear Cuenta</h1>
+                <div>
+                <input type="text" 
+                       name="NOMBRE_PILA" 
+                       placeholder="Nombre(s)" 
+                       {...register("NOMBRE_PILA", { required: true })}/>
+                       {errors.NOMBRE_PILA &&
                                 <div className=" col-5 ps-3">
                                     <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.NOMBRE_PILA.message}</div>
                                 </div>}
-
-                            {errors.APELLIDO_PATERNO &&
+                </div>
+                <div>
+                <input type="text" 
+                       name="APELLIDO_PATERNO" 
+                       placeholder="Apellido Paterno" 
+                       {...register("APELLIDO_PATERNO", { required: true })}/>
+                        {errors.APELLIDO_PATERNO &&
                                 <div className=" col-5 pe-3">
                                     <div className=" bg-danger mt-2 text-white shadow ">{errors.APELLIDO_PATERNO.message}</div>
                                 </div>}
-                        </div>
-
-
-                        <div className="pt-2 px-5 row align-items-center text-start">
-                            <label className="col">Apellido Materno </label>
-                            <label className="col ps-5">Número Celular </label>
-                        </div>
-
-                        <div className="pt-1 pb-2 px-3 row justify-content-evenly">
-                            <input
-                                className="col-5"
-                                type="text"
-                                placeholder='Apellido Materno'
-                                name="APELLIDO_MATERNO"
-                                {...register("APELLIDO_MATERNO", { required: true })}
-                            />
-                            <input
-                                className="col-5"
-                                name="TELEFONO"
-                                type="text"
-                                maxLength="12"
-
-                                placeholder='xx-xxxx-xxxx'
-                                {...register("TELEFONO", { required: true })}
-                            />
-                        </div>
-
-
-                        <div className=" row justify-content-evenly">
+                </div>
+                <div><input type="text" 
+                            name="APELLIDO_MATERNO" 
+                            placeholder="Apellido Materno" 
+                            {...register("APELLIDO_MATERNO", { required: true })}/>
                             {errors.APELLIDO_MATERNO &&
                                 <div className=" col-5 ps-3">
                                     <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.APELLIDO_MATERNO.message}</div>
                                 </div>}
-
+                            </div>
+                <div><input type="text" 
+                            name="NUMERO_BOLETA" 
+                            placeholder="Número de Boleta " 
+                            {...register("NUMERO_BOLETA", { required: true })}/>
+                            {errors.NUMERO_BOLETA &&
+                                <div className=" col-5 pe-3">
+                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.NUMERO_BOLETA.message}</div>
+                                </div>}
+                            </div>
+                <div><input type="text" 
+                            name="NOMBRE_USUARIO" 
+                            placeholder="Nombre de Usuario" 
+                            {...register("NOMBRE_USUARIO", { required: true })}/>
+                            {errors.NOMBRE_USUARIO &&
+                                <div className=" col-5 ps-3">
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.NOMBRE_USUARIO.message}</div>
+                                </div>}
+                            </div>
+                <div><input type="text" 
+                            name="TELEFONO" 
+                            placeholder="Número Celular" 
+                            maxLength="12"
+                            {...register("TELEFONO", { required: true })}/>
                             {errors.TELEFONO &&
                                 <div className=" col-5 pe-3">
                                     <div className=" bg-danger mt-2 text-white shadow ">{errors.TELEFONO.message}</div>
                                 </div>}
-                        </div>
-
-                        <div className="pt-2 px-5 row align-items-center text-start">
-                            <label className="col">Correo </label>
-                            <label className="col ps-5">Confirmar correo </label>
-                        </div>
-                        <div className="pt-1 pb-2 px-3 row justify-content-evenly">
-                            <input
-                                className="col-5"
-                                type="email"
-                                name="CORREO"
-                                placeholder='alguien@example.com'
-                                {...register("CORREO", { required: true })}
-                            />
-
-                            <input
-                                className="col-5"
-                                type="email"
-                                name="repeatCORREO"
-
-                                placeholder='alguien@example.com'
-                                {...register("repeatCORREO", { required: true })}
-                            />
-                        </div>
-
-
-                        <div className=" row justify-content-evenly">
+                            </div>
+                <div><input type="email" 
+                            name="CORREO" 
+                            placeholder="Correo Electrónico" 
+                            {...register("CORREO", { required: true })}/>
                             {errors.CORREO &&
                                 <div className=" col-5 ps-3">
                                     <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.CORREO.message}</div>
                                 </div>}
-
+                            </div>
+                <div><input type="email" 
+                            name="repeatCORREO" 
+                            placeholder="Confirmar Correo Electrónico" 
+                            {...register("repeatCORREO", { required: true })}/>
                             {errors.repeatCORREO &&
-                                <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatCORREO.message}</div>
+                                <div className=" col-5 ps-3">
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.repeatCORREO.message}</div>
                                 </div>}
-                        </div>
-
-
-                        <div className="pt-2 px-5 row align-items-center text-start">
-                            <label className="col">Contraseña </label>
-                            <label className="col ps-5">Confirmar contraseña </label>
-                        </div>
-                        <div className="pt-1 pb-3 px-3 row justify-content-evenly">
-                            <input
-                                className="col-5"
-                                type="password"
-                                placeholder='Contraseña'
-                                name="CONTRASENIA"
-                                {...register("CONTRASENIA", { required: true })}
-                            />
-                            <input
-                                className="col-5"
-                                type="password"
-                                name="repeatCONTRASENIA"
-
-                                placeholder='Contraseña'
-                                {...register("repeatCONTRASENIA", { required: true })}
-                            />
-                        </div>
-
-
-
-                        <div className=" row justify-content-evenly">
+                            </div>
+                <div><input type="password" 
+                            name="CONTRASENIA" 
+                            placeholder="Contraseña" 
+                            {...register("CONTRASENIA", { required: true })}/>
                             {errors.CONTRASENIA &&
                                 <div className=" col-5 ps-3">
                                     <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.CONTRASENIA?.message}</div>
                                 </div>}
-
-                            {errors.repeatCONTRASENIA &&
-                                <div className=" col-5 pe-3">
-                                    <div className=" bg-danger mt-2 text-white shadow ">{errors.repeatCONTRASENIA?.message}</div>
-                                </div>}
-                        </div>
-
-
-
-                        <div className="px-5 pb-4 pt-3 row align-items-center">
-                            <div className="col ps-4">
-                                <input className=" btn btn-dark btn-custom btn-xs " type="submit" value="Registrarse" />
                             </div>
-                            <Link className="col h5 pe-4" to="/login">Ingresar</Link>
-                        </div>
-
+                <div><input type="password" 
+                            name="repeatCONTRASENIA" 
+                            placeholder="Confirmar Contraseña" 
+                            {...register("repeatCONTRASENIA", { required: true })}/>
+                            {errors.repeatCONTRASENIA &&
+                                <div className=" col-5 ps-3">
+                                    <div className=" bg-danger mt-2  text-white shadow fs-6">{errors.repeatCONTRASENIA?.message}</div>
+                                </div>}
+                            </div>
+                    <button type="submit">Registrarse!</button>
                     </form>
                 </div>
             </div>

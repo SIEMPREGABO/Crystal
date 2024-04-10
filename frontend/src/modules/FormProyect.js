@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useProject } from "../context/projectContext.js";
+import {projectSchema} from "../schemas/project.js";
 import {useState, useEffect, useForm, useNavigate} from "react";
 import { useAuth } from '../context/authContext';
 import { loginSchema } from '../schemas/auth.js';

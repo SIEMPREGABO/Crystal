@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 import Footer from "./Footer";
+import Header from "./Header.js";
 import ParticlesBackground  from "./ParticlesBackground.js";
 import ear from "../images/Ear.jpg"
 import human from "../images/Man.jpg"
@@ -16,6 +17,7 @@ import '../css/home.css'
 export const Home = () => {
     return (
         <>
+        <Header/>
         <div className="divp">
         
             <main>
